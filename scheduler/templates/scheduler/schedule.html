@@ -1,0 +1,304 @@
+{% extends 'scheduler/base.html' %}
+
+{% block title %}Interview Schedule - Interview Scheduler{% endblock %}
+
+{% block extra_css %}
+<style>
+    .schedule-container {
+        margin-top: 20px;
+    }
+    
+    .no-data {
+        text-align: center;
+        padding: 40px;
+        color: #666;
+        font-size: 1.2em;
+    }
+    
+    .date-section {
+        margin-bottom: 40px;
+    }
+    
+    .date-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        font-size: 1.3em;
+        font-weight: bold;
+        text-align: center;
+    }
+    
+    .panels-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .panels-container-3 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 20px;
+    }
+    
+    .panel {
+        border: 2px solid #ddd;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+    
+    .panel-header {
+        background: #667eea;
+        color: white;
+        padding: 12px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 1.1em;
+    }
+    
+    .panel-header.panel-1 {
+        background: #667eea;
+    }
+    
+    .panel-header.panel-2 {
+        background: #764ba2;
+    }
+    
+    .panel-header.panel-3 {
+        background: #e74c3c;
+    }
+    
+    .panel-content {
+        padding: 0;
+    }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    thead {
+        background: #f8f9fa;
+    }
+    
+    th {
+        padding: 12px;
+        text-align: left;
+        font-weight: 600;
+        border-bottom: 2px solid #ddd;
+    }
+    
+    td {
+        padding: 12px;
+        border-bottom: 1px solid #eee;
+    }
+    
+    tr:hover {
+        background: #f8f9fa;
+    }
+    
+    .candidate-name {
+        font-weight: 600;
+        color: #333;
+    }
+    
+    .company-name {
+        color: #666;
+        font-style: italic;
+    }
+    
+    .time-slot {
+        color: #667eea;
+        font-weight: 500;
+    }
+    
+    .time-slots-container {
+        margin-top: 20px;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 5px;
+    }
+    
+    .time-slots-title {
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: #333;
+    }
+    
+    .time-slots-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 8px;
+    }
+    
+    .time-slot-indicator {
+        padding: 8px;
+        border-radius: 4px;
+        text-align: center;
+        font-size: 0.85em;
+        font-weight: 500;
+    }
+    
+    .time-slot-available {
+        background: #28a745;
+        color: white;
+    }
+    
+    .time-slot-unavailable {
+        background: #dc3545;
+        color: white;
+    }
+    
+    .panel-3-content {
+        padding: 15px;
+    }
+    
+    @media (max-width: 768px) {
+        .panels-container, .panels-container-3 {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="schedule-container">
+    {% if has_interviews %}
+        {% for date_key, date_info in schedule_data.items %}
+            <div class="date-section">
+                <div class="date-header">
+                    {{ date_info.date_display }}
+                </div>
+                
+                <div class="panels-container">
+                    <div class="panel">
+                        <div class="panel-header panel-1">Panel 1</div>
+                        <div class="panel-content">
+                            {% if date_info.panel1 %}
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Time</th>
+                                            <th>Candidate</th>
+                                            <th>Company</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for interview in date_info.panel1 %}
+                                            <tr>
+                                                <td class="time-slot">{{ interview.start_time }} - {{ interview.end_time }}</td>
+                                                <td class="candidate-name">{{ interview.candidate }}</td>
+                                                <td class="company-name">{{ interview.company }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            {% else %}
+                                <div style="padding: 20px; text-align: center; color: #999;">
+                                    No interviews scheduled
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="panel">
+                        <div class="panel-header panel-2">Panel 2</div>
+                        <div class="panel-content">
+                            {% if date_info.panel2 %}
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Time</th>
+                                            <th>Candidate</th>
+                                            <th>Company</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for interview in date_info.panel2 %}
+                                            <tr>
+                                                <td class="time-slot">{{ interview.start_time }} - {{ interview.end_time }}</td>
+                                                <td class="candidate-name">{{ interview.candidate }}</td>
+                                                <td class="company-name">{{ interview.company }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            {% else %}
+                                <div style="padding: 20px; text-align: center; color: #999;">
+                                    No interviews scheduled
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Time Slot Availability -->
+                <div class="time-slots-container">
+                    <div class="time-slots-title">Time Slot Availability (Green = Available, Red = Unavailable)</div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div>
+                            <strong>Panel 1:</strong>
+                            <div class="time-slots-grid">
+                                {% for slot in date_info.time_slots_p1 %}
+                                    <div class="time-slot-indicator {% if slot.available %}time-slot-available{% else %}time-slot-unavailable{% endif %}">
+                                        {{ slot.time }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div>
+                            <strong>Panel 2:</strong>
+                            <div class="time-slots-grid">
+                                {% for slot in date_info.time_slots_p2 %}
+                                    <div class="time-slot-indicator {% if slot.available %}time-slot-available{% else %}time-slot-unavailable{% endif %}">
+                                        {{ slot.time }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Panel 3: No Slots Available -->
+                {% if date_info.panel3 %}
+                <div class="panel" style="margin-top: 20px;">
+                    <div class="panel-header panel-3">Panel 3 - No Slots Available</div>
+                    <div class="panel-3-content">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Requested Time</th>
+                                    <th>Candidate</th>
+                                    <th>Company</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for interview in date_info.panel3 %}
+                                    <tr>
+                                        <td class="time-slot">{{ interview.requested_time }}</td>
+                                        <td class="candidate-name">{{ interview.candidate }}</td>
+                                        <td class="company-name">{{ interview.company }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="no-data">
+            <p>No interviews scheduled yet.</p>
+            <p style="margin-top: 15px;">
+                <a href="{% url 'add_interviews' %}" style="color: #667eea; text-decoration: none; font-weight: 600;">
+                    Click here to add interviews
+                </a>
+            </p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+

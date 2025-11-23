@@ -1,0 +1,56 @@
+===========================================
+CLEAR TERMINAL STEPS TO RUN THE PROJECT
+===========================================
+
+STEP 1: Open PowerShell or Command Prompt
+------------------------------------------
+Navigate to the project folder:
+cd C:\Users\aravi\OneDrive\Documents\Project\Scheduler
+
+
+STEP 2: Activate Virtual Environment
+------------------------------------
+For PowerShell:
+.\venv\Scripts\Activate.ps1
+
+For Command Prompt:
+venv\Scripts\activate.bat
+
+You should see (venv) at the start of your prompt.
+
+
+STEP 3: Start the Server
+------------------------
+python manage.py runserver
+
+You will see:
+"Starting development server at http://127.0.0.1:8000/"
+
+
+STEP 4: Open Browser
+--------------------
+Go to: http://127.0.0.1:8000/
+
+
+STEP 5: Stop the Server (when done)
+------------------------------------
+Press: CTRL + C
+
+
+===========================================
+COMPLETE COPY-PASTE COMMANDS (PowerShell)
+===========================================
+
+cd C:\Users\aravi\OneDrive\Documents\Project\Scheduler
+.\venv\Scripts\Activate.ps1
+python manage.py runserver
+
+
+===========================================
+COMPLETE COPY-PASTE COMMANDS (CMD)
+===========================================
+
+cd C:\Users\aravi\OneDrive\Documents\Project\Scheduler
+venv\Scripts\activate.bat
+python manage.py runserver
+

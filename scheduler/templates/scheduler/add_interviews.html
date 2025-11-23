@@ -1,0 +1,89 @@
+{% extends 'scheduler/base.html' %}
+
+{% block title %}Add Interviews - Interview Scheduler{% endblock %}
+
+{% block extra_css %}
+<style>
+    .form-container {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    
+    .form-group {
+        margin-bottom: 25px;
+    }
+    
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #333;
+    }
+    
+    textarea {
+        width: 100%;
+        min-height: 400px;
+        padding: 15px;
+        border: 2px solid #ddd;
+        border-radius: 5px;
+        font-family: 'Courier New', monospace;
+        font-size: 14px;
+        resize: vertical;
+    }
+    
+    textarea:focus {
+        outline: none;
+        border-color: #667eea;
+    }
+    
+    .help-text {
+        margin-top: 8px;
+        color: #666;
+        font-size: 0.9em;
+    }
+    
+    .btn-submit {
+        background: #667eea;
+        color: white;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+    
+    .btn-submit:hover {
+        background: #764ba2;
+    }
+    
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2 style="text-align: center; margin-bottom: 30px;">Add Interview Data</h2>
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="interview_data">Enter Interview Data (Single or Multiple):</label>
+            <textarea 
+                id="interview_data" 
+                name="interview_data" 
+                placeholder="Paste your interview data here. The system will automatically identify and parse the information."
+            ></textarea>
+            <div class="help-text">
+                <strong>Note:</strong> Adding new data will replace all existing interviews. 
+                The system will automatically detect dates, candidates, companies, and time slots from your input.
+            </div>
+        </div>
+        
+        <div style="text-align: center;">
+            <button type="submit" class="btn-submit">Add Interviews</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+

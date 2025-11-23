@@ -1,0 +1,60 @@
+===========================================
+SIMPLE STEPS TO RUN THE PROJECT
+===========================================
+
+STEP 1: Open PowerShell or Command Prompt
+------------------------------------------
+Press Windows Key + R
+Type: powershell
+Press Enter
+
+
+STEP 2: Go to Project Folder
+------------------------------------------
+Type this command and press Enter:
+cd C:\Users\aravi\OneDrive\Documents\Project\Scheduler
+
+
+STEP 3: Activate Virtual Environment
+------------------------------------------
+Type this command and press Enter:
+.\venv\Scripts\Activate.ps1
+
+You should see (venv) at the start of your prompt.
+
+
+STEP 4: Start the Server
+------------------------------------------
+Type this command and press Enter:
+python manage.py runserver
+
+Wait until you see:
+"Starting development server at http://127.0.0.1:8000/"
+
+
+STEP 5: Open Browser
+------------------------------------------
+Open your web browser (Chrome, Edge, Firefox, etc.)
+Type this in the address bar:
+http://127.0.0.1:8000/
+Press Enter
+
+
+STEP 6: Use the Application
+------------------------------------------
+1. Click "Add Interviews"
+2. Paste your interview data
+3. Click "Add Interviews" button
+4. View the schedule with Panel 1, Panel 2, and Panel 3
+
+
+STEP 7: Stop the Server (When Done)
+------------------------------------------
+Go back to the PowerShell window
+Press: CTRL + C
+
+
+===========================================
+THAT'S IT! YOU'RE DONE!
+===========================================
+
