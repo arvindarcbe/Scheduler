@@ -81,9 +81,19 @@ def parse_interview_data(text_data):
         line_normalized = re.sub(r'(\d{1,2})\s+(st|nd|rd|th)', r'\1\2', line_normalized, flags=re.IGNORECASE)
         line_normalized = re.sub(r'(\d{1,2})\s+(nov|november|dec|december|jan|january|feb|february|mar|march|apr|april|may|jun|june|jul|july|aug|august|sep|september|oct|october)', r'\1 \2', line_normalized, flags=re.IGNORECASE)
         
-        # Try multiple patterns
+        # Try multiple patterns (order matters - more specific patterns first)
         patterns = [
+            # Pattern 1c: Handle entries WITHOUT "with" keyword - "30 nov AAA Dell from 3pm to 4 pm"
+            # This handles cases where candidate and company are directly adjacent
+            r'(\d{1,2})(?:st|nd|rd|th)?\s+(nov|november|dec|december|jan|january|feb|february|mar|march|apr|april|may|jun|june|jul|july|aug|august|sep|september|oct|october)\s+([A-Za-z]{1,20})\s+([A-Za-z]{1,20})\s+from\s+(\d{1,2}(?::\d{2})?(?:\s*\.\s*\d{2})?\s*(?:am|pm|AM|PM|noon))\s+to\s+(\d{1,2}(?::\d{2})?(?:\s*\.\s*\d{2})?\s*(?:am|pm|AM|PM|noon))',
+            
+            # Pattern 1b: Handle short candidate names (like "AAA") with short company names (like "Del")
+            # This pattern specifically handles cases where both candidate and company are short (1-15 chars)
+            # Try this FIRST because it's more specific
+            r'(\d{1,2})(?:st|nd|rd|th)?\s+(nov|november|dec|december|jan|january|feb|february|mar|march|apr|april|may|jun|june|jul|july|aug|august|sep|september|oct|october)\s+([A-Za-z]{1,15})\s+with\s+([A-Za-z]{1,15})\s+from\s+(\d{1,2}(?::\d{2})?(?:\s*\.\s*\d{2})?\s*(?:am|pm|AM|PM|noon))\s+to\s+(\d{1,2}(?::\d{2})?(?:\s*\.\s*\d{2})?\s*(?:am|pm|AM|PM|noon))',
+            
             # Pattern 1: Standard with "from" - "24th nov priyanka with Deloitte from 11am to 12pm"
+            # Updated to handle short company names like "Del" - use negative lookahead to stop at "with"
             r'(\d{1,2})(?:st|nd|rd|th)?\s+(nov|november|dec|december|jan|january|feb|february|mar|march|apr|april|may|jun|june|jul|july|aug|august|sep|september|oct|october)\s+([A-Za-z]+(?:\s+[A-Za-z]+)*?)\s+with\s+([A-Za-z0-9&\s]+?)\s+from\s+(\d{1,2}(?::\d{2})?(?:\s*\.\s*\d{2})?\s*(?:am|pm|AM|PM|noon))\s+to\s+(\d{1,2}(?::\d{2})?(?:\s*\.\s*\d{2})?\s*(?:am|pm|AM|PM|noon))',
             
             # Pattern 2: Without "from" - "24 th Nov Murugaboopathy with infolab 12.00pm to 01.00pm"
